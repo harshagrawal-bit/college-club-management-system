@@ -188,3 +188,285 @@ table tbody tr:hover {
   border-radius: 8px !important;
   font-weight: 600 !important;
 }
+
+
+/* ==========================================================================
+   HIGH-CONTRAST LIGHT MODE RULES (Bulletproof Text Visibility Fix)
+   ========================================================================== */
+
+[data-theme="light"], html.light, body.light, .light {
+  color-scheme: light !important;
+  background-color: #F8FAFC !important;
+  color: #0F172A !important;
+}
+
+/* 1. Hero Left Column: Headline, Subtitle & Stat Dock */
+[data-theme="light"] .hero-tidewell-headline {
+  background: linear-gradient(135deg, #0F172A 30%, #1E40AF 70%, #4338CA 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .hero-tidewell-subtitle {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="light"] .hero-status-pill {
+  background: #EFF6FF !important;
+  border: 1px solid #BFDBFE !important;
+  color: #1D4ED8 !important;
+}
+
+[data-theme="light"] .hero-stat-value {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="light"] .hero-stat-label {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .hero-animate-title .text-secondary {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+/* 2. Hero Right Column: Autonomous Incident Monitor & Schedule Cards */
+[data-theme="light"] .tidewell-glass-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12) !important;
+}
+
+[data-theme="light"] .card-loc-header {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+  padding-bottom: 10px !important;
+}
+
+[data-theme="light"] .tidewell-card-item {
+  background: #F8FAFC !important;
+  border: 1.5px solid #E2E8F0 !important;
+}
+
+[data-theme="light"] .tidewell-card-item:hover {
+  background: #F1F5F9 !important;
+  border-color: #CBD5E1 !important;
+}
+
+[data-theme="light"] .card-item-title {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .card-item-meta {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="light"] .card-item-rating {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .card-item-rating small {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .card-item-schedule {
+  border-top: 1px solid #E2E8F0 !important;
+  color: #334155 !important;
+}
+
+[data-theme="light"] .sched-date strong {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .sched-date small {
+  color: #475569 !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="light"] .sched-badge {
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
+  font-weight: 600 !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+[data-theme="light"] .card-highlight-pill {
+  background: #EEF2FF !important;
+  color: #3730A3 !important;
+  border: 1.5px solid #C7D2FE !important;
+  font-weight: 600 !important;
+}
+
+/* 3. Universal High Contrast Text in Light Mode */
+[data-theme="light"] .text-white:not(.btn-primary):not(.btn-tidewell-primary):not(.badge-solid) {
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .text-secondary {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .text-muted {
+  color: #475569 !important;
+}
+
+[data-theme="light"] .text-light {
+  color: #334155 !important;
+}
+
+[data-theme="light"] small {
+  color: #475569 !important;
+}
+
+/* 4. Feature Strip Cards */
+[data-theme="light"] .feature-strip-item {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme="light"] .feature-strip-item strong {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .feature-strip-item span {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+/* 5. Metrics, Cards & Headings */
+[data-theme="light"] .metric,
+[data-theme="light"] .card-stat-glass,
+[data-theme="light"] .card {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .metric-label,
+[data-theme="light"] .stat-title,
+[data-theme="light"] .kpi-title {
+  color: #475569 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .metric-value,
+[data-theme="light"] .stat-value,
+[data-theme="light"] .kpi-value {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="light"] .metric-detail,
+[data-theme="light"] .stat-desc,
+[data-theme="light"] .kpi-subtext {
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+/* 6. Static Tables & Lists in Light Theme */
+[data-theme="light"] .table-wrap,
+[data-theme="light"] .table-glass,
+[data-theme="light"] table {
+  color: #0F172A !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+
+[data-theme="light"] table th {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid #CBD5E1 !important;
+}
+
+[data-theme="light"] table td {
+  color: #0F172A !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+[data-theme="light"] table td strong,
+[data-theme="light"] table td .name {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] table td small,
+[data-theme="light"] table td .text-secondary,
+[data-theme="light"] table td .text-muted {
+  color: #475569 !important;
+  font-weight: 500 !important;
+}
+
+[data-theme="light"] tbody tr:hover {
+  background: #F8FAFC !important;
+}
+
+/* 7. Quick Band, Drawers & Modals */
+[data-theme="light"] .quick-band {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+[data-theme="light"] .quick-label {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .modal-content,
+[data-theme="light"] .drawer-panel {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+
+[data-theme="light"] .modal-title {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="light"] .modal-body,
+[data-theme="light"] .modal-footer {
+  color: #334155 !important;
+}
+
+/* 8. Form Inputs in Light Mode */
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+[data-theme="light"] .form-label,
+[data-theme="light"] label {
+  color: #1E293B !important;
+  font-weight: 600 !important;
+}
+
+/* 9. Light Mode Backdrop */
+[data-theme="light"] .hero-fluted-backdrop {
+  background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 60%), #F1F5F9 !important;
+}
+
+[data-theme="light"] .hero-tidewell-section {
+  background-color: #F1F5F9 !important;
+}
