@@ -35,7 +35,7 @@ def create_app(config_class=Config):
         # Allow static files and exempt endpoints
         if request.endpoint in exempt_endpoints or (request.endpoint and request.endpoint.startswith("auth.")):
             return None
-        if request.path.startswith("/static/") or request.path.startswith("/api/auth/"):
+        if request.path.startswith("/static/") or request.path.startswith("/api/") or request.path.endswith(".pdf"):
             return None
 
         # Allow test client without forced redirect if in testing mode and session not explicitly unset

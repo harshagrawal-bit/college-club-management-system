@@ -1,0 +1,190 @@
+/* ==========================================================================
+   ClubHub Lovable Design System (Manrope, OKLCH, Spectrum Gradient Bar)
+   Mirrors the pixel-perfect design from Lovable 'pixel-perfect-scene-3432'
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --background: oklch(.145 .018 265);
+  --foreground: oklch(.95 .009 255);
+  --card: oklch(.18 .018 265);
+  --secondary: oklch(.215 .021 265);
+  --accent: oklch(.25 .026 265);
+  --muted-foreground: oklch(.64 .023 260);
+  --primary: oklch(.79 .15 169);
+  --primary-foreground: oklch(.19 .04 172);
+  --border: oklch(.31 .019 264 / .62);
+  --success: oklch(.78 .145 163);
+  --warning: oklch(.82 .15 82);
+  --info: oklch(.73 .12 246);
+  --rose: oklch(.75 .16 347);
+  --destructive: oklch(.68 .19 25);
+  --overlay: oklch(.08 .015 265 / .8);
+  --hero-shade: linear-gradient(90deg, oklch(.15 .025 260 / .94), oklch(.15 .025 260 / .4) 65%, oklch(.15 .025 260 / .12));
+  --surface-gradient: linear-gradient(125deg, oklch(.21 .025 250), var(--card));
+
+  --theme-violet: oklch(.66 .24 302);
+  --theme-pink: oklch(.68 .26 350);
+  --theme-cyan: oklch(.8 .15 215);
+  --theme-blue: oklch(.62 .22 250);
+  --theme-on-color: oklch(1 0 0);
+  --theme-on-color-muted: oklch(.94 .018 290);
+  --theme-spectrum: linear-gradient(115deg, var(--theme-violet), var(--theme-pink) 43%, var(--theme-cyan) 78%, var(--theme-blue));
+  --theme-wash: linear-gradient(125deg, color-mix(in oklch, var(--theme-violet), transparent 91%), color-mix(in oklch, var(--theme-pink), transparent 95%) 40%, color-mix(in oklch, var(--theme-cyan), transparent 91%) 80%, transparent);
+  --theme-shadow: 0 8px 26px color-mix(in oklch, var(--foreground), transparent 95%);
+  --theme-button-shadow: 0 4px 14px color-mix(in oklch, var(--primary), transparent 82%);
+  --theme-glass: color-mix(in oklch, var(--card), transparent 9%);
+}
+
+:root.light, [data-theme="light"] {
+  --background: oklch(.975 .009 285);
+  --foreground: oklch(.26 .045 285);
+  --card: oklch(1 0 0);
+  --secondary: oklch(.957 .018 290);
+  --accent: oklch(.93 .04 305);
+  --muted-foreground: oklch(.49 .035 285);
+  --primary: oklch(.54 .24 320);
+  --primary-foreground: oklch(1 0 0);
+  --border: oklch(.88 .022 290 / .75);
+  --success: oklch(.46 .12 170);
+  --info: oklch(.48 .15 240);
+  --warning: oklch(.49 .12 65);
+  --rose: oklch(.54 .23 350);
+  --destructive: oklch(.55 .22 25);
+  --surface-gradient: linear-gradient(130deg, var(--card), var(--secondary));
+}
+
+/* Base Body & Layout */
+body {
+  font-family: var(--font-sans) !important;
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Spectrum Top Line across Header */
+.app-header::before, .topbar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--theme-spectrum);
+  z-index: 1000;
+}
+
+.brand-tilde, .brand-mark {
+  background: var(--theme-spectrum) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  font-weight: 800;
+}
+
+/* Frosted Glass Shells */
+.app-header, .topbar, .main-nav {
+  background: var(--theme-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* Active Nav with Spectrum Line */
+.header-nav-pill-container a.active::after, .nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--theme-spectrum) !important;
+}
+
+/* Spectrum Highlights on Metric Cards */
+.metric, .card-stat-glass {
+  border-radius: 12px !important;
+  box-shadow: var(--theme-shadow) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: var(--surface-gradient) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.metric::before, .card-stat-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--theme-spectrum);
+}
+
+.card-stat-glass:nth-child(2)::before { background: var(--theme-cyan) !important; }
+.card-stat-glass:nth-child(3)::before { background: var(--theme-blue) !important; }
+.card-stat-glass:nth-child(4)::before { background: var(--theme-pink) !important; }
+
+/* 100% STATIC TABLES: Strictly No Tilt, No Perspective, No Shake */
+.table-wrap, .table-glass, table, .table-responsive {
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  border-radius: 8px !important;
+  border: 1px solid var(--border) !important;
+  background: var(--card) !important;
+  box-shadow: var(--theme-shadow) !important;
+}
+
+table th {
+  background: var(--secondary) !important;
+  color: var(--muted-foreground) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  padding: 14px 18px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+table td {
+  padding: 16px 18px !important;
+  border-top: 1px solid var(--border) !important;
+  font-size: 12px !important;
+  vertical-align: middle !important;
+}
+
+table tbody tr:hover {
+  background: color-mix(in oklch, var(--accent), transparent 65%) !important;
+}
+
+/* Badges & Chips */
+.badge-status-dot, .badge {
+  border-radius: 6px !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  padding: 4px 8px !important;
+}
+
+/* Buttons with Proportional Hierarchy */
+.btn-tidewell-primary, .btn-primary {
+  background: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  box-shadow: var(--theme-button-shadow) !important;
+  border: none !important;
+}
+
+.btn-tidewell-secondary, .btn-outline {
+  background: var(--secondary) !important;
+  color: var(--foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}

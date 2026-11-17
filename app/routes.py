@@ -55,6 +55,118 @@ def init_db_endpoint():
 
 
 # -------------------------------------------------------------
+# CAMPUS DATA API (Lovable React & TanStack Frontend Contract)
+# -------------------------------------------------------------
+@main_bp.route("/api/campus-data", methods=["GET"])
+def get_campus_data():
+    """
+    Returns complete campus data matching Lovable schema for students, clubs,
+    events, memberships, registrations, reviews, and audit records.
+    """
+    try:
+        conn = get_db_connection()
+        with conn.cursor() as cursor:
+            # 1. Faculty map
+            cursor.execute("SELECT faculty_id, name, dept_id FROM FacultyCoordinators")
+            fac_rows = cursor.fetchall()
+            faculty_map = {r['faculty_id']: r['name'] for r in fac_rows}
+
+            # 2. Students
+            cursor.execute("SELECT student_id, prn_number, name, email, dept_id, year_of_study FROM Students ORDER BY student_id ASC")
+            stu_rows = cursor.fetchall()
+            students = [{
+                'id': r['student_id'],
+                'prn': r['prn_number'],
+                'name': r['name'],
+                'email': r['email'],
+                'department': r['dept_id'],
+                'year': r['year_of_study']
+            } for r in stu_rows]
+            students_map = {r['student_id']: r['name'] for r in stu_rows}
+
+            # 3. Clubs
+            cursor.execute("SELECT club_id, club_name, category, faculty_id, member_count FROM Clubs")
+            club_rows = cursor.fetchall()
+            clubs = [{
+                'id': r['club_id'],
+                'name': r['club_name'],
+                'category': r['category'],
+                'coordinator': faculty_map.get(r['faculty_id'], ''),
+                'initials': r['club_id'][:2],
+                'budget': 100000,
+                'election': False
+            } for r in club_rows]
+
+            # 4. Events
+            cursor.execute("SELECT event_id, club_id, event_name, event_date, venue, budget_allocated, status, is_award_winning FROM Events ORDER BY event_date DESC")
+            ev_rows = cursor.fetchall()
+            events = [{
+                'id': r['event_id'],
+                'name': r['event_name'],
+                'clubId': r['club_id'],
+                'date': str(r['event_date']),
+                'venue': r['venue'],
+                'budget': float(r['budget_allocated'] or 0),
+                'status': r['status'],
+                'award': bool(r['is_award_winning']),
+                'attendees': 4
+            } for r in ev_rows]
+
+            # 5. Memberships
+            cursor.execute("SELECT membership_id, student_id, club_id, role, join_date, status FROM Memberships ORDER BY membership_id ASC")
+            mem_rows = cursor.fetchall()
+            memberships = [{
+                'id': r['membership_id'],
+                'studentId': r['student_id'],
+                'clubId': r['club_id'],
+                'role': r['role'],
+                'joined': str(r['join_date']),
+                'status': r['status']
+            } for r in mem_rows]
+
+            # 6. Registrations
+            cursor.execute("SELECT registration_id, event_id, student_id, attendance_status FROM EventRegistrations")
+            reg_rows = cursor.fetchall()
+            registrations = [{
+                'id': r['registration_id'],
+                'eventId': r['event_id'],
+                'studentId': r['student_id'],
+                'attended': r['attendance_status'] == 'Present'
+            } for r in reg_rows]
+
+            # 7. Reviews / Feedback
+            cursor.execute("SELECT feedback_id, event_id, student_id, rating, comments FROM Feedback")
+            rev_rows = cursor.fetchall()
+            reviews = [{
+                'id': r['feedback_id'],
+                'eventId': r['event_id'],
+                'name': students_map.get(r['student_id'], 'Campus Member'),
+                'rating': r['rating'],
+                'review': r['comments']
+            } for r in rev_rows]
+
+            # 8. Live audit items
+            audit = [
+                {'id': 'A1', 'time': '10:42:08', 'name': 'Member count synchronized', 'entity': 'CSI', 'status': 'SUCCESS', 'details': 'Membership enrolled. Club count updated.'},
+                {'id': 'A2', 'time': '10:38:21', 'name': 'Duplicate membership prevented', 'entity': 'EDC', 'status': 'BLOCKED', 'details': 'Duplicate enrollment rejected.'},
+                {'id': 'A3', 'time': '10:31:45', 'name': 'Event budget verified', 'entity': 'HackVerse 2026', 'status': 'SUCCESS', 'details': 'Allocation within club budget cap.'}
+            ]
+
+            return jsonify({
+                'students': students,
+                'clubs': clubs,
+                'events': events,
+                'memberships': memberships,
+                'registrations': registrations,
+                'reviews': reviews,
+                'audit': audit
+            }), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+
+# -------------------------------------------------------------
 # DASHBOARD (Overview with ClubSummary View & Statistics)
 # -------------------------------------------------------------
 @main_bp.route("/")

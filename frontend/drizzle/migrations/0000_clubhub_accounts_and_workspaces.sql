@@ -1,0 +1,16 @@
+CREATE TABLE public.profiles (id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE, display_name text NOT NULL DEFAULT '', avatar_url text, preferences jsonb NOT NULL DEFAULT '{}');
+GRANT SELECT, UPDATE ON public.profiles TO authenticated; GRANT ALL ON public.profiles TO service_role;
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY own_profile_read ON public.profiles FOR SELECT TO authenticated USING (id=auth.uid());
+CREATE POLICY own_profile_update ON public.profiles FOR UPDATE TO authenticated USING (id=auth.uid()) WITH CHECK (id=auth.uid());
+CREATE TABLE public.user_roles (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE, role text NOT NULL DEFAULT 'student' CHECK (role IN ('admin','president','faculty','student')), club_id text, UNIQUE(user_id,role,club_id));
+GRANT SELECT ON public.user_roles TO authenticated; GRANT ALL ON public.user_roles TO service_role;
+ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY own_roles ON public.user_roles FOR SELECT TO authenticated USING (user_id=auth.uid());
+CREATE TABLE public.campus_workspaces (user_id uuid PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE, records jsonb NOT NULL DEFAULT '{"students":[],"clubs":[],"events":[],"memberships":[],"reviews":[],"registrations":[],"audit":[]}');
+GRANT SELECT, UPDATE ON public.campus_workspaces TO authenticated; GRANT ALL ON public.campus_workspaces TO service_role;
+ALTER TABLE public.campus_workspaces ENABLE ROW LEVEL SECURITY;
+CREATE POLICY own_workspace_read ON public.campus_workspaces FOR SELECT TO authenticated USING (user_id=auth.uid());
+CREATE POLICY admin_workspace_update ON public.campus_workspaces FOR UPDATE TO authenticated USING (user_id=auth.uid() AND EXISTS(SELECT 1 FROM public.user_roles WHERE user_id=auth.uid() AND role='admin')) WITH CHECK (user_id=auth.uid());
+CREATE FUNCTION public.create_campus_account() RETURNS trigger LANGUAGE plpgsql SECURITY DEFINER SET search_path=public AS $$ BEGIN INSERT INTO public.profiles(id,display_name) VALUES(NEW.id,COALESCE(NEW.raw_user_meta_data->>'display_name','')); INSERT INTO public.user_roles(user_id,role) VALUES(NEW.id,'student'); INSERT INTO public.campus_workspaces(user_id) VALUES(NEW.id); RETURN NEW; END $$;
+CREATE TRIGGER create_campus_account AFTER INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION public.create_campus_account();
